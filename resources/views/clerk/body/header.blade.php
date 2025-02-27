@@ -30,18 +30,13 @@
                         style="font-weight: bold;"></span></span>
             </li>
         </ul>
-        <ul class="nav navbar-toolbar">
-            <li>
-                <a href="javascript:refreshPage();" class="text-primary ml-3" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Refresh Page">
-                    <i class="fa fa-refresh fa-2x text-success"></i>
-                </a>
-            </li>
-        </ul>
+       {{-- <ul class="nav navbar-toolbar">
+        <div> Clerk Dashboard</div>
+        </ul> --}}
         <!-- END TOP-LEFT TOOLBAR-->
-        <!-- START TOP-RIGHT TOOLBAR-->
+        {{-- <!-- START TOP-RIGHT TOOLBAR-->
         <ul class="nav navbar-toolbar">
-           
+
             <li class="dropdown dropdown-user">
                 @if (Auth::check())
             <li class="dropdown dropdown-user">
@@ -64,9 +59,10 @@
                             class="fa fa-sign-out"></i>Logout</a>
                 </ul>
             </li>
-        </ul>
+        </ul> --}}
         <!-- END TOP-RIGHT TOOLBAR-->
     </div>
+
     <script>
         function updateTime() {
             const options = {

@@ -67,19 +67,7 @@ class ActivityController extends Controller
     public function ActivityStore(Request $request)
     {
 
-        // if (
-        //     !$request->filled('activity_name') ||
-        //     !$request->filled('collegeCode') ||
-        //     !$request->filled('proponentId') ||
-        //     !$request->filled('proponent') ||
-        //     !$request->filled('year') ||
-        //     !$request->filled('start') ||
-        //     !$request->filled('end') ||
-        //     !$request->filled('budget') ||
-        //     !$request->filled('proponents')
-        // ) {
-        //     // return redirect()->back()->with('warning', 'Please ensure all required fields are completed before proceeding.');
-        // }
+
 
         $request->validate([
             'activity_name' => 'required|string|max:255|unique:activities',

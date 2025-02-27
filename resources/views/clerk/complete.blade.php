@@ -69,11 +69,11 @@
                                 <td class="text-center align-middle">
                                     {{-- @if ($complete->is_updated)
                                     <a href="#" class="disabled" aria-disabled="true" title="This activity is already updated">
-                                        <i class="fa fa-edit fa-2x text-muted"></i> 
+                                        <i class="fa fa-edit fa-2x text-muted"></i>
                                     </a>
                                     @else --}}
                                     <a href="#" class="" data-toggle="modal" data-target="#modal-{{ $complete->activity_code }}">
-                                        <i class="fa fa-edit fa-2x"></i> 
+                                        <i class="fa fa-edit fa-2x"></i>
                                     </a>
                                     {{-- @endif --}}
                                     <div class="modal fade" id="modal-{{ $complete->activity_code }}" tabindex="-1"
@@ -94,7 +94,7 @@
                                                         method="POST" class="text-left">
                                                         @csrf
                                                         <div class="row">
-                                                           
+
                                                             <div class="col-sm-9 form-group">
                                                                 <label><b>No. of Partnerships</b></label>
                                                                 <div class="input-group">
@@ -102,7 +102,7 @@
                                                                             class="fa fa-handshake-o"></i></span>
                                                                     <input type="number" class="form-control input"
                                                                         id="partnership_accomplished"
-                                                                        name="partnership_accomplished" placeholder=" ">
+                                                                        name="partnership_accomplished" placeholder=" " required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-9 form-group">
@@ -111,9 +111,9 @@
                                                                     <span class="input-group-addon"><i
                                                                             class="fa fa-handshake-o"></i></span>
                                                                    <select class="form-control select2" multiple="multiple" name="partnership_name_accomplished[]" id="partnership_name_accomplished">
-                                                                       
+
                                                                    </select>
-                                                                        
+
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-9 form-group">
@@ -123,14 +123,16 @@
                                                                             class="fa fa-users"></i></span>
                                                                     <input type="number" class="form-control input"
                                                                         id="trainees_accomplished"
-                                                                        name="trainees_accomplished" placeholder=" ">
+                                                                        name="trainees_accomplished" placeholder=" " required>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal"> <i
+                                                                class="fas fa-times "></i> Cancel</button>
+                                                                <button type="submit" class="btn btn-success">
+                                                                    <i class="fas fa-check"></i> Submit
+                                                                </button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -151,7 +153,7 @@
          $(document).ready(function() {
             $('.select2').select2({
                 allowClear: true,
-                tags: true 
+                tags: true
             });
         });
     });
