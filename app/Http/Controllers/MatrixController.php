@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 class MatrixController extends Controller
 {
     public function Matrix(){
-    
+
         $activity = Activity::all();
         $fileType = ['moa', 'proposal', 'attendance', 'evaluation', 'terminal'];
         return view('clerk.matrix', compact('activity', 'fileType'));
     }
-    
+
     public function matrixResult(Request $request)
 {
     $clerkData = Auth::user();
@@ -44,7 +44,7 @@ class MatrixController extends Controller
     }
     //  ibalik rani para ka maam orioque
 
-  
+
     $fileTypes = ['moa', 'proposal', 'attendance', 'evaluation', 'terminal'];
     $activitiess = Activity::where('activity_code', $collegeCode)->first();
     return view('clerk.matrix', [
@@ -59,21 +59,20 @@ class MatrixController extends Controller
 }
 public function downloadFile(Request $request, $filePath)
 {
-    // Decode the base64 encoded file path
+
     $decodedFilePath = base64_decode($filePath);
-    
-    // Check if the file exists in the storage
+
     if (Storage::exists($decodedFilePath)) {
-        // Return the file as a response for download
+
       return response()->file(Storage::path($decodedFilePath));
     } else {
-        // Handle file not found case
+
         return redirect()->back()->with('warning', 'The file you are trying to access could not be found. Please check the file details and try again.');
 
     }
 }
-    
-    
+
+
 public function uploadFileMatrix(Request $request, $activityCode)
 {
     $request->validate([
@@ -82,7 +81,7 @@ public function uploadFileMatrix(Request $request, $activityCode)
         'fileType' => 'required|string',
     ]);
 
-    // Retrieve the activity by activityCode
+
     $activity = Activity::where('activity_code', $activityCode)->first();
 
     if (!$activity) {
@@ -94,17 +93,13 @@ public function uploadFileMatrix(Request $request, $activityCode)
     $fileType = $request->input('fileType');
     $fileName = $file->getClientOriginalName();
 
-    // Use activity name as the folder name, sanitize it
     $activityName = $activity->activity_name ?? 'unknown_activity';
     $activityName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $activityName);
 
-    // Define the file path using the activity name instead of activityCode
     $filePath = 'public/uploads/' . $activityName . '/' . $fileName;
 
-    // Store the file in the folder based on activity name
     $file->storeAs('public/uploads/' . $activityName, $fileName);
 
-    // Switch on the file type and store the file path in the database
     switch ($fileType) {
         case 'moa':
             $activity->moa_uploaded = $filePath;
@@ -157,15 +152,15 @@ public function uploadFileMatrix(Request $request, $activityCode)
 
     public function getActivityProgress(Request $request,$activityCode)
     {
-        
+
         $activity = Activity::where('activity_code', $activityCode)->first();
-    
+
         if (!$activity) {
             return response()->json(['error' => 'Activity not found.'], 404);
         }
-    
+
         $progress = $activity->getProgress();
-    
+
         return response()->json(['progress' => $progress]);
     }
 
@@ -183,7 +178,7 @@ public function uploadFileMatrix(Request $request, $activityCode)
     return response()->json(['success' => false]);
  }
     }
-    
+
 
 
 

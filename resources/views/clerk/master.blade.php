@@ -89,7 +89,7 @@
 
             $(document).ready(function() {
                 var currentYear = new Date().getFullYear();
-                // Initialize datepicker
+
                 $('#year').datepicker({
                     format: "yyyy",
                     viewMode: "years",
@@ -100,7 +100,7 @@
             });
             $(document).ready(function() {
                 var currentYear = new Date().getFullYear();
-                // Initialize datepicker
+
                 $('#year_update').datepicker({
                     format: "yyyy",
                     viewMode: "years",

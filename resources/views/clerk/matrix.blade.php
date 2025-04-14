@@ -54,7 +54,6 @@
             display: block;
             width: 200px;
         }
-
     </style>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -77,7 +76,6 @@
                                 <th>Activity Code</th>
                                 <th>Activity Name</th>
                                 <th>Implementation Period</th>
-
                                 <th>Quarter</th>
                                 <th>Memorandum of Aggrement</th>
                                 <th>Proposal</th>
@@ -96,18 +94,19 @@
                                     </td>
                                     <td class="name">{{ $activity->activity_name }}</td>
                                     <td><span
-                                        class="badge badge-default m-r-5 m-b-5">{{ $activity->start->format('M d Y') . ' - ' . $activity->end->format('M d Y')  }} </span>
-                                </td>
+                                            class="badge badge-default m-r-5 m-b-5">{{ $activity->start->format('M d Y') . ' - ' . $activity->end->format('M d Y') }}
+                                        </span>
+                                    </td>
                                     <td>
                                         @if ($activity->quarter == '1')
-                                        <span>1st Quarter</span>
-                                    @elseif ($activity->quarter == '2')
-                                    <span>2nd Quarter</span>
-                                    @elseif ($activity->quarter == '3')
-                                    <span>3rd Quarter</span>
-                                    @elseif ($activity->quarter == '4')
-                                    <span>4th Quarter</span>
-                                    @endif
+                                            <span>1st Quarter</span>
+                                        @elseif ($activity->quarter == '2')
+                                            <span>2nd Quarter</span>
+                                        @elseif ($activity->quarter == '3')
+                                            <span>3rd Quarter</span>
+                                        @elseif ($activity->quarter == '4')
+                                            <span>4th Quarter</span>
+                                        @endif
                                     </td>
 
                                     {{-- moa --}}
@@ -119,7 +118,8 @@
                                             data-toggle="modal" data-target="#uploadModal"
                                             data-activity-code="{{ $activity->activity_code }}" data-file-type="moa">
                                             <span class="active-hidden">
-                                                <i class="fa {{ $activity->moa_uploaded ? 'fa-cloud-upload' : 'fa-cloud-upload' }}"></i>
+                                                <i
+                                                    class="fa {{ $activity->moa_uploaded ? 'fa-cloud-upload' : 'fa-cloud-upload' }}"></i>
                                                 {{ $activity->moa_uploaded ? 'Reupload' : 'Upload' }}
                                             </span>
                                             <span class="active-visible" style="display: none;">
@@ -130,18 +130,18 @@
 
                                         <span class="file-name" id="moa-file-name-{{ $activity->activity_code }}">
                                             @if ($activity->moa_uploaded)
-                                            <a href="javascript:void(0);" class="text-center align-middle text-danger m-l-5 btn-clear"
-                                                    data-activity-code="{{ $activity->activity_code }}" data-file-type="moa" style="font-size: 1.5em;">
+                                                <a href="javascript:void(0);"
+                                                    class="text-center align-middle text-danger m-l-5 btn-clear"
+                                                    data-activity-code="{{ $activity->activity_code }}"
+                                                    data-file-type="moa" style="font-size: 1.5em;">
                                                     &times;
                                                 </a>
                                                 <a href="{{ route('file.download', ['filePath' => base64_encode($activity->moa_uploaded)]) }}"
                                                     target="_blank">
                                                     {{ basename($activity->moa_uploaded) }}
                                                 </a>
-
                                             @else
                                                 <span class="text-muted">No file uploaded</span>
-
                                             @endif
 
                                         </span>
@@ -169,10 +169,12 @@
 
                                             <span class="file-name" id="proposal-file-name-{{ $activity->activity_code }}">
                                                 @if ($activity->proposal_uploaded)
-                                                <a href="javascript:void(0);" class="text-center align-middle text-danger m-l-5 btn-clear"
-                                                data-activity-code="{{ $activity->activity_code }}" data-file-type="proposal" style="font-size: 1.5em;">
-                                                &times;
-                                            </a>
+                                                    <a href="javascript:void(0);"
+                                                        class="text-center align-middle text-danger m-l-5 btn-clear"
+                                                        data-activity-code="{{ $activity->activity_code }}"
+                                                        data-file-type="proposal" style="font-size: 1.5em;">
+                                                        &times;
+                                                    </a>
                                                     <a href="{{ route('file.download', ['filePath' => base64_encode($activity->proposal_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->proposal_uploaded) }}
@@ -204,10 +206,12 @@
                                             </button>
                                             <span class="file-name" id="terminal-file-name-{{ $activity->activity_code }}">
                                                 @if ($activity->terminal_uploaded)
-                                                <a href="javascript:void(0);" class="text-center align-middle text-danger m-l-5 btn-clear"
-                                                data-activity-code="{{ $activity->activity_code }}" data-file-type="terminal" style="font-size: 1.5em;">
-                                                &times;
-                                            </a>
+                                                    <a href="javascript:void(0);"
+                                                        class="text-center align-middle text-danger m-l-5 btn-clear"
+                                                        data-activity-code="{{ $activity->activity_code }}"
+                                                        data-file-type="terminal" style="font-size: 1.5em;">
+                                                        &times;
+                                                    </a>
                                                     <a href="{{ route('file.download', ['filePath' => base64_encode($activity->terminal_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->terminal_uploaded) }}
@@ -240,10 +244,12 @@
                                             <span class="file-name"
                                                 id="attendance-file-name-{{ $activity->activity_code }}">
                                                 @if ($activity->attendance_uploaded)
-                                                <a href="javascript:void(0);" class="text-center align-middle text-danger m-l-5 btn-clear"
-                                                data-activity-code="{{ $activity->activity_code }}" data-file-type="attendance" style="font-size: 1.5em;">
-                                                &times;
-                                            </a>
+                                                    <a href="javascript:void(0);"
+                                                        class="text-center align-middle text-danger m-l-5 btn-clear"
+                                                        data-activity-code="{{ $activity->activity_code }}"
+                                                        data-file-type="attendance" style="font-size: 1.5em;">
+                                                        &times;
+                                                    </a>
                                                     <a href="{{ route('file.download', ['filePath' => base64_encode($activity->attendance_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->attendance_uploaded) }}
@@ -278,10 +284,12 @@
                                             <span class="file-name"
                                                 id="evaluation-file-name-{{ $activity->activity_code }}">
                                                 @if ($activity->evaluation_uploaded)
-                                                <a href="javascript:void(0);" class="text-center align-middle text-danger m-l-5 btn-clear"
-                                                data-activity-code="{{ $activity->activity_code }}" data-file-type="evaluation" style="font-size: 1.5em;">
-                                                &times;
-                                            </a>
+                                                    <a href="javascript:void(0);"
+                                                        class="text-center align-middle text-danger m-l-5 btn-clear"
+                                                        data-activity-code="{{ $activity->activity_code }}"
+                                                        data-file-type="evaluation" style="font-size: 1.5em;">
+                                                        &times;
+                                                    </a>
                                                     <a href="{{ route('file.download', ['filePath' => base64_encode($activity->evaluation_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->evaluation_uploaded) }}
@@ -329,7 +337,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalLabel"> <i class=" fa fa-cloud-upload fa-2x "></i><b> Upload Files</b></h5>
+                    <h5 class="modal-title" id="uploadModalLabel"> <i class=" fa fa-cloud-upload fa-2x "></i><b> Upload
+                            Files</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -350,8 +359,7 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">
                         <i class="fa fa-times"></i> Close
                     </button>
-                    <button type="button" class="btn btn-success" id="upload-file-btn"
-                        onclick="submitModalForm()">
+                    <button type="button" class="btn btn-success" id="upload-file-btn" onclick="submitModalForm()">
                         <i class="fa fa-upload"></i> Upload
                     </button>
                 </div>
@@ -551,7 +559,7 @@
                 var fileType = $(this).data('file-type');
 
                 $.ajax({
-                    url: '{{ route('file.clear') }}', // Define this route in web.php
+                    url: '{{ route('file.clear') }}',
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -566,7 +574,7 @@
                             $(`button[data-activity-code="${activityCode}"][data-file-type="${fileType}"]`)
                                 .removeClass('d-none');
 
-                            // alert('File cleared successfully.');
+
                         } else {
                             alert('Failed to clear the file.');
                         }

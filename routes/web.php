@@ -29,7 +29,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-  
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -43,7 +43,7 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     //admin Routes
-   
+
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'AdminProfileView'])->name('admin.profile');
     Route::post('/admin/profile/update', [AdminController::class, 'AdminProfileUpdate'])->name('admin.profile.update');
@@ -52,21 +52,24 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/user/view/{id}', [AdminController::class, 'UserView'])->name('user.view');
     Route::post('/user/change/role', [AdminController::class, 'ChangeUserRole'])->name('user.change.role');
     Route::get('permission/user', [AdminController::class, 'change_permission'])->name('permission');
-        
-  
+
+
     Route::get('college/management', [CollegeController::class, 'CollegeManange'])->name('college.manage');
     Route::post('college/store', [CollegeController::class, 'CollegeStore'])->name('college.store');
     // Route::post('college/status/{collegeCode}', [CollegeController::class, 'CollegeStatus'])->name('college.change.status');
     Route::put('/college/toggle-status/{collegeCode}', [CollegeController::class, 'update'])->name('college.update');
 
     Route::get('/department', [ProgramController::class, 'ProgramManage'])->name('program.manage');
-    Route::post('/department/store', [ProgramController::class, 'ProgramStore'])->name('program.store');   
+    Route::post('/department/store', [ProgramController::class, 'ProgramStore'])->name('program.store');
     // Route::post('/program/status/{programId}', [ProgramController::class, 'ProgramStatus'])->name('program.change.status');
     Route::put('/department/toggle-status/{programId}', [ProgramController::class, 'update'])->name('program.update');
 
    Route::get('/matrix-admin', [MatrixAdminController::class, 'Matrix'])->name('matrix');
    Route::get('/matrix-result-admin', [MatrixAdminController::class, 'MatrixResult'])->name('MatrixResult');
    Route::get('/get-activities-progress/{activityCode}', [MatrixAdminController::class, 'getActivityProgress'])->name('activity.progress.admin');
+
+   Route::get('/activities/management-admin', [ActivityController::class, 'AdminActivityManage'])->name('admin.activity.manage');
+   Route::post('activity/store-admin', [ActivityController::class, 'AdminActivityStore'])->name('admin.activity.store');
 
    Route::get('/getProponentsdirector/{collegeCode}', [ActivityController::class, 'getProponentdirector'])->name('get.proponent.director');
    Route::get('/activities/matrix-admin', [ActivityController::class, 'ActivitiesMatrix'])->name('activities.matrix');
@@ -81,7 +84,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
    // Only allow the director to manage clerk download permissions
     Route::post('/file-permissions/{id}', [FileController::class, 'updateDownloadPermission'])
     ->name('file-permissions.update')
-    ->middleware(['auth', 'role:Admin']); 
+    ->middleware(['auth', 'role:Admin']);
 
     //end admin routes
 });
@@ -95,7 +98,7 @@ Route::middleware(['auth', 'role:Clerk'])->group(function () {
     Route::get('/clerk/profile', [ClerkController::class, 'ClerkProfile'])->name('clerk.profile');
     Route::post('/clerk/profile/update', [ClerkController::class, 'ClerkProfileUpdate'])->name('clerk.profile.update');
     Route::post('/clerk/password/update', [ClerkController::class, 'ClerkPasswordUpdate'])->name('clerk.password.update');
-   
+
 
     Route::get('/activities/matrix', [ActivityController::class, 'ActivityMatrix'])->name('activity.matrix');
     Route::get('/activities/management-clerk', [ActivityController::class, 'ActivityManage'])->name('activity.manage');
@@ -103,7 +106,7 @@ Route::middleware(['auth', 'role:Clerk'])->group(function () {
     Route::get('/getProponents/{collegeCode}', [ActivityController::class, 'getProponent'])->name('get.proponent');
     Route::get('/completed-activities/clerk/', [ActivityController::class, 'completed'])->name('completed');
     Route::post('/submit-accomplished/{activityCode}', [ActivityController::class, 'submitAccomplished'])->name('submit.accomplished');
-        
+
      Route::put('/activities/update/{activityCode}/', [ActivityController::class, 'update'])->name('activity.update');
 
     Route::get('/matrix', [MatrixController::class, 'Matrix'])->name('matrix');
@@ -113,7 +116,7 @@ Route::middleware(['auth', 'role:Clerk'])->group(function () {
     Route::get('/get-activity-progress/{activityCode}', [MatrixController::class, 'getActivityProgress'])->name('activity.progress');
     Route::post('/clear-file/clerk', [MatrixController::class, 'clearFile'])->name('file.clear');
 
-   
+
    Route::get('hero/section', [HeroController::class, 'index'])->name('hero.manage');
    Route::post('hero/store', [HeroController::class,'store'])->name('hero.store');
    Route::delete('hero/{id}', [HeroController::class, 'destroy'])->name('hero.destroy');
@@ -122,7 +125,7 @@ Route::middleware(['auth', 'role:Clerk'])->group(function () {
    Route::get('/download-all-files', [FileController::class, 'downloadAllFiles'])
      ->name('files.downloadAll')
      ->middleware(['auth', 'checkDownloadPermission']);
-   
+
 });
 
 

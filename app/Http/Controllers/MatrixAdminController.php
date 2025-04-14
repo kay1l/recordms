@@ -22,7 +22,7 @@ class MatrixAdminController extends Controller
         $collegeCode = $request->input('collegeCode');
         $programId = $request->input('programId');
 
-  
+
         $activities = Activity::where('year', $year)
         ->where('collegeCode', $collegeCode)
          ->where('proponentId', $programId)
@@ -59,16 +59,16 @@ class MatrixAdminController extends Controller
 }
     public function getActivityProgress(Request $request,$activityCode)
     {
-        
+
         $activity = Activity::where('activity_code', $activityCode)->first();
-    
+
         if (!$activity) {
             return response()->json(['error' => 'Activity not found.'], 404);
         }
-    
+
         $progress = $activity->getProgress();
-    
+
         return response()->json(['progress' => $progress]);
     }
-    
+
 }

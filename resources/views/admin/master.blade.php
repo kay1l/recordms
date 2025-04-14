@@ -14,6 +14,7 @@
     <link href="{{asset('./assets/vendors/DataTables/datatables.min.css')}}" rel="stylesheet" />
     <!-- PLUGINS STYLES-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.12.3/sweetalert2.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <!-- THEME STYLES-->
     <link href="{{asset('assets/css/main.min.css')}}" rel="stylesheet" />
@@ -35,7 +36,7 @@
             <!-- START PAGE CONTENT-->
             @yield('content')
             <!-- END PAGE CONTENT-->
-            
+
             @include('admin.body.footer')
         </div>
     </div>
@@ -60,6 +61,7 @@
     <script src="{{asset('assets/js/app.min.js')}}" type="text/javascript"></script>
     <!-- PAGE LEVEL SCRIPTS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.12.3/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{-- <script src="{{asset('./assets/js/scripts/dashboard_1_demo.js')}}" type="text/javascript"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
@@ -88,7 +90,52 @@
             }).datepicker('setDate', new Date(currentYear,0,1));
         });
     });
-    
+    $(document).ready(function() {
+                var currentDate = new Date();
+                $('#start .input-group.date').datepicker({
+                    format: "yyyy-mm-dd",
+                    viewMode: "decade", // Starts at the decade level (decade view)
+                    autoclose: true, // Allows full date selection after drilling down
+                }).datepicker('setDate', (currentDate));
+            });
+            $(document).ready(function() {
+                var currentDate = new Date();
+                $('#end .input-group.date').datepicker({
+                    format: "yyyy-mm-dd",
+                    viewMode: "decade",
+                    autoclose: true,
+                }).datepicker('setDate', (currentDate));
+            });
+
+            // Update Status Date
+            $(document).ready(function() {
+                var currentDate = new Date();
+                $('#start_update .input-group.date').datepicker({
+                    format: "yyyy-mm-dd",
+                    viewMode: "decade",
+                    autoclose: true,
+                })
+            });
+            $(document).ready(function() {
+                var currentDate = new Date();
+                $('#end_update .input-group.date').datepicker({
+                    format: "yyyy-mm-dd",
+                    viewMode: "decade",
+                    autoclose: true,
+                })
+            });
+
+    $(document).ready(function() {
+                var currentYear = new Date().getFullYear();
+
+                $('#year_update').datepicker({
+                    format: "yyyy",
+                    viewMode: "years",
+                    minViewMode: "years",
+                    autoclose: true,
+
+                })
+            });
     </script>
 
 </body>

@@ -45,7 +45,7 @@ class ActivityController extends Controller
         $college = College::where('status', 'Active')->get();
         $programs = Program::where('status', 'Active')->get();
 
-        // $activityCode = Activity::findOrNew('activity_code');
+
         $completeAct = Activity::where('status', 'Accomplished')->count();
         $totalAct = Activity::all()->count();
 
@@ -60,14 +60,36 @@ class ActivityController extends Controller
          'completeAct',
          'totalAct',
          'activity',
-
-
         ));
     }
+
+    public function AdminActivityManage(Request $request){
+
+        $activities = Activity::all();
+        $adminData = Auth::user();
+        $college = College::where('status', 'Active')->get();
+        $programs = Program::where('status', 'Active')->get();
+
+
+        $completeAct = Activity::where('status', 'Accomplished')->count();
+        $totalAct = Activity::all()->count();
+
+        $activity = Activity::with(['college','program'])
+          ->join('reports', 'reports.activity_code','=','activities.activity_code')
+          ->get();
+
+        return view('admin.create' , compact('activities',
+        'college',
+         'programs',
+         'adminData',
+         'completeAct',
+         'totalAct',
+         'activity',
+        ));
+    }
+
     public function ActivityStore(Request $request)
     {
-
-
 
         $request->validate([
             'activity_name' => 'required|string|max:255|unique:activities',
@@ -96,9 +118,8 @@ class ActivityController extends Controller
         $startDate = new \DateTime($request->input('start'));
         $endDate = new \DateTime($request->input('end'));
 
-        $startQuarter = ceil($startDate->format('n') / 3); // 1 to 4
-        $endQuarter = ceil($endDate->format('n') / 3); // 1 to 4
-
+        $startQuarter = ceil($startDate->format('n') / 3);
+        $endQuarter = ceil($endDate->format('n') / 3);
 
         $quarterToStore = (string)$startQuarter;
 
@@ -119,7 +140,101 @@ class ActivityController extends Controller
         $newActivity->quarter = $quarterToStore;
         $newActivity->save();
 
-        // Create a report entry
+
+        Report::create([
+            'activity_code' => $newActivity->activity_code,
+            'collegeCode' => $newActivity->collegeCode,
+            'programId' => $newActivity->proponentId,
+            'trainees_target' => $request->input('trainees_target'),
+            'trainees_accomp' => 0,
+            'partnership_target' => $request->input('partnership_target'),
+            'partnership_accomp' => 0,
+            'partnership_name' => null,
+            'percentage_accomp' => 100,
+            'percentage_target' => 97,
+        ]);
+
+        $college = College::where('collegeCode', $newActivity->collegeCode)->first();
+        $collegeName = $college ? $college->collegeName : 'Unknown College';
+
+        $department = Program::where('programId', $newActivity->proponentId)->first();
+        $departmentName = $department ? $department->programName : 'Unknown Department';
+
+        $activityData = [
+            'activity_code' => $newActivity->activity_code,
+            'activity_name' => $newActivity->activity_name,
+            'start' => $newActivity->start->format('M Y'),
+            'end' => $newActivity->end->format('M Y'),
+            'quarter' => $newActivity->quarter,
+            'collegeCode' => $collegeName,
+            'programId' => $departmentName,
+            'proponents' => $newActivity->proponents,
+            'proponent' => $newActivity->proponent,
+            'year' => $newActivity->year,
+            'budget' => $newActivity->budget,
+            'status' => $newActivity->status,
+
+        ];
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity saved successfully.',
+            'activity' => $activityData
+        ]);
+    }
+
+    public function AdminActivityStore(Request $request)
+    {
+
+        $request->validate([
+            'activity_name' => 'required|string|max:255|unique:activities',
+            'collegeCode' => 'required|exists:colleges,collegeCode',
+            'proponentId' => 'required|exists:programs,programId',
+            'proponent' => 'required|array|max:100',
+            'proponents' => 'required|array|max:200',
+            'year' => 'required|integer',
+            'start' => 'required|date_format:Y-m-d',
+            'end' => 'required|date_format:Y-m-d',
+            'budget' => 'required|string',
+        ]);
+
+        $existingActivity = Activity::where('activity_name', $request->input('activity_name'))->first();
+
+        if ($existingActivity) {
+            return redirect()->back()->with('warning', 'An Activity with the same name already exists!');
+        }
+
+        $proponentsArray = implode(',', $request->input('proponent'));
+        $proponentsArr = implode(',', $request->input('proponents'));
+        $collegeCode = $request->input('collegeCode');
+        $year = $request->input('year');
+        $activityCode = $collegeCode . '-' . $year . '-' . Str::random(4);
+
+        $startDate = new \DateTime($request->input('start'));
+        $endDate = new \DateTime($request->input('end'));
+
+        $startQuarter = ceil($startDate->format('n') / 3);
+        $endQuarter = ceil($endDate->format('n') / 3);
+
+        $quarterToStore = (string)$startQuarter;
+
+
+        $newActivity = new Activity();
+        $newActivity->activity_code = $activityCode;
+        $newActivity->activity_name = $request->input('activity_name');
+        $newActivity->collegeCode = $request->input('collegeCode');
+        $newActivity->proponentId = $request->input('proponentId');
+        $newActivity->proponent = $proponentsArray;
+        $newActivity->proponents = $proponentsArr;
+        $newActivity->year = $year;
+        $newActivity->start = $request->input('start');
+        $newActivity->end = $request->input('end');
+        $newActivity->budget = $request->input('budget');
+
+
+        $newActivity->quarter = $quarterToStore;
+        $newActivity->save();
+
+
         Report::create([
             'activity_code' => $newActivity->activity_code,
             'collegeCode' => $newActivity->collegeCode,

@@ -31,7 +31,7 @@
                             <span class="nav-label">Dashboard</span>
                         </a>
                     </li>
-                 
+
                     <li>
                         <a href="{{route('activities.matrix')}}"><i class="sidebar-item-icon fa fa-table"></i>
                             <span class="nav-label">Activity Matrix</span>
@@ -40,6 +40,12 @@
                     <li>
                         <a href="{{route('admin.overview')}}"><i class="sidebar-item-icon fa fa-table"></i>
                             <span class="nav-label">Activity Overview </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('admin.activity.manage')}}">
+                            <i class="sidebar-item-icon fa fa-list"></i>
+                            <span class="nav-label">Activity Management</span>
                         </a>
                     </li>
                     <li>
@@ -54,13 +60,13 @@
                             <span class="nav-label">Departments</span>
                         </a>
                     </li>
-              
+
                 <li>
                     <a href="{{route('manage.user')}}"><i class="sidebar-item-icon fa fa-users"></i>
                         <span class="nav-label">User Accounts</span>
                     </a>
                 </li>
-             
+
                     <li>
                         <a href="{{route('admin.profile')}}"><i class="sidebar-item-icon fa fa-user"></i>
                             <span class="nav-label">Profile</span>
@@ -79,7 +85,7 @@
       document.querySelectorAll('.nav-label').forEach(form => {
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
-    
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You want to change the status of this program?",
