@@ -375,6 +375,50 @@ class ActivityController extends Controller
 
         return redirect()->back()->with('success', 'Activity updated successfully!');
     }
+
+    public function activityUpdate(Request $request, $activityCode)
+    {
+        $activity = Activity::findOrFail($activityCode);
+
+        $startDate = new \DateTime($request->input('start_update'));
+        $endDate = new \DateTime($request->input('end_update'));
+
+
+        $startQuarter = ceil($startDate->format('n') / 3);
+        $endQuarter = ceil($endDate->format('n') / 3);
+
+        $quarterToStore = (string)$startQuarter;
+
+        $activity->activity_name = $request->input('activity_name');
+        $activity->collegeCode = $request->input('collegeCode1');
+        $activity->proponentId = $request->input('proponentId1');
+        $activity->start = $request->input('start_update');
+        $activity->end = $request->input('end_update');
+        $activity->year = $request->input('year_update');
+        $activity->budget = $request->input('budget');
+        $activity->quarter = $quarterToStore;
+
+        if ($request->has('proponent_update')) {
+            $activity->proponent = implode(',', $request->input('proponent_update'));
+        }
+
+        if ($request->has('proponents_update')) {
+            $activity->proponents = implode(',', $request->input('proponents_update'));
+        }
+
+
+        $activity->save();
+
+
+        $report = Report::where('activity_code', $activityCode)->first();
+        if ($report) {
+            $report->trainees_target = $request->input('trainees_target');
+            $report->partnership_target = $request->input('partnership_target');
+            $report->save();
+        }
+
+        return redirect()->back()->with('success', 'Activity updated successfully!');
+    }
 }
 
 

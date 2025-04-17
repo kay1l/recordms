@@ -250,7 +250,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <form id="activity-form" action="{{ route('activity.update', ['activityCode' => $item->activity_code]) }}" method="POST" class="actForm text-left">
+                                        <form id="activity-form" action="{{ route('admin.activity.update', ['activityCode' => $item->activity_code]) }}" method="POST" class="actForm text-left">
                                             @csrf
                                             @method('PUT')
 
