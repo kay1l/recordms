@@ -66,11 +66,12 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
 
    Route::get('/matrix-admin', [MatrixAdminController::class, 'Matrix'])->name('matrix');
    Route::get('/matrix-result-admin', [MatrixAdminController::class, 'MatrixResult'])->name('MatrixResult');
-   Route::get('/get-activities-progress/{activityCode}', [MatrixAdminController::class, 'getActivityProgress'])->name('activity.progress.admin');
+   Route::get('/get-activities/admin/progress/{activityCode}', [MatrixAdminController::class, 'AdmingetActivityProgress'])->name('activity.progress.admin');
 
    Route::get('/activities/management-admin', [ActivityController::class, 'AdminActivityManage'])->name('admin.activity.manage');
    Route::post('activity/store-admin', [ActivityController::class, 'AdminActivityStore'])->name('admin.activity.store');
 
+   Route::put('/activities/admin/update/{activityCode}/', [ActivityController::class, 'activityUpdate'])->name('admin.activity.update');
    Route::get('/getProponentsdirector/{collegeCode}', [ActivityController::class, 'getProponentdirector'])->name('get.proponent.director');
    Route::get('/activities/matrix-admin', [ActivityController::class, 'ActivitiesMatrix'])->name('activities.matrix');
    Route::get('/download-admin-pdf/{activityCode}', [DownloadAdminController::class, 'downloadPdf'])->name('downloadPdf.admin');
@@ -86,6 +87,9 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     ->name('file-permissions.update')
     ->middleware(['auth', 'role:Admin']);
 
+    Route::post('/clear-file/admin', [MatrixAdminController::class, 'clearFile'])->name('file.clear.admin');
+    Route::post('/uploadFileMatrix/admin/{activityCode}', [MatrixAdminController::class, 'uploadFileMatrixAdmin'])->name('uploadFileMatrixAdmin');
+    Route::get('/get-activity-progress/{activityCode}', [MatrixAdminController::class, 'getActivityProgress'])->name('admin.activity.progress');
     //end admin routes
 });
 
