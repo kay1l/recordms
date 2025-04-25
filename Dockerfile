@@ -1,28 +1,20 @@
-# Use official PHP image with Apache
 FROM php:8.2-apache
 
-# Enable Apache mod_rewrite
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql
+
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Install system dependencies & PHP extensions
-RUN apt-get update && apt-get install -y \
-    git curl unzip zip libpng-dev libonig-dev libxml2-dev libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql zip gd
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy project files
+COPY . /var/www/html
 
 # Set working directory
-WORKDIR /var/www/html/public
+WORKDIR /var/www/html
 
-# Copy project files
-COPY . .
+# Fix file permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 
-# Install PHP dependencies (production mode)
-RUN composer install --no-dev --optimize-autoloader
-
-# Set permissions for storage and cache
-RUN chown -R www-data:www-data storage bootstrap/cache
-
-# Expose port 80
-EXPOSE 80
+# Set DocumentRoot to public/
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
