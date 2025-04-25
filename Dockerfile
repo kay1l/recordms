@@ -1,20 +1,30 @@
-FROM php:8.2-apache
+FROM php:7.4-fpm
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    zip \
+    git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache rewrite module
-RUN a2enmod rewrite
-
-# Copy project files
-COPY . /var/www/html
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Fix file permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+# Copy the application files
+COPY . /var/www/html
 
-# Set DocumentRoot to public/
-RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+# Install PHP dependencies using Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Expose the port
+EXPOSE 80
+
+CMD ["php-fpm"]
