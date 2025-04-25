@@ -1,5 +1,3 @@
-
-
 FROM php:8.2-apache
 
 # Install dependencies
@@ -17,6 +15,9 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
 # Set working directory
 WORKDIR /var/www/html
 
@@ -26,7 +27,12 @@ COPY . /var/www/html
 # Install PHP dependencies using Composer
 RUN composer install --no-dev --optimize-autoloader
 
+# Set correct permissions for Laravel storage and cache
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Expose the port
 EXPOSE 80
 
-CMD ["php-fpm"]
+# Apache is already running PHP, so no need for php-fpm
+CMD ["apache2-foreground"]
