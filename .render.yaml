@@ -1,8 +1,13 @@
 services:
   - type: web
     name: laravel-app
-    env: docker
-    plan: free
-    autoDeploy: true
-    buildCommand: ""
-    startCommand: "apache2-foreground"
+    env: php
+    buildCommand: "composer install && php artisan config:cache"
+    startCommand: "php -S 0.0.0.0:10000 -t public"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        value: base64:YOUR_KEY_HERE
+      - key: APP_DEBUG
+        value: false
