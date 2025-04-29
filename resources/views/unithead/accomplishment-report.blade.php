@@ -344,7 +344,7 @@
             widows: 2;
             text-align: left;
         }
-        
+
     </style>
 </head>
 
@@ -353,7 +353,7 @@
     <div class="c11">
         <span
             style="
-        
+
           display: inline-block;
           margin: 0px 0px;
           border: 0px solid #000000;
@@ -382,7 +382,7 @@
           height: 88.26px;
         "><img
                 alt=""
-    @if ($userCollege->collegeName == 'College of Technology and Engineering') 
+    @if ($userCollege->collegeName == 'College of Technology and Engineering')
         src="{{ public_path('logos/images/COTE.png') }}"
     @elseif ($userCollege->collegeName == 'College of Teacher Education')
         src="{{ public_path('logos/images/CTE.jpeg') }}"
@@ -405,7 +405,7 @@
           " />
         </span>
 
-        <span style=" 
+        <span style="
       margin-left: -180px;
       margin-bottom: 20px;
     " class="c1">Republic of the
@@ -413,7 +413,7 @@
 
     </div>
 
-    
+
     <p class="c4">
         <span style="margin-left:-65px; margin-bottom:10px;" class="c12">{{ $userCollege->collegeName }} <br>
             EXTENSION AND COMMUNITY DEVELOPMENT UNIT
@@ -423,7 +423,7 @@
         @else
             <p>No activity found for the specified year.</p>
         @endif
-        
+
 
     </p>
     <p class="c4">
@@ -435,8 +435,8 @@
     <p class="c2 c8"><span class="c1"></span></p>
     <table class="c17">
         <tr class="c14">
-            <td class="c9" colspan="1" rowspan="1">
-                <p class="c2"><span class="c1"></span></p>
+            <td class="c13" colspan="1" rowspan="1">
+                <p class="c3"><span class="c12">Extension Performance Indicators</span></p>
             </td>
             <td class="c13" colspan="1" rowspan="1">
                 <p class="c3"><span class="c12">Target</span></p>
@@ -502,7 +502,7 @@
 
             <td class="c6" colspan="1" rowspan="1">
                 @foreach ($activities as $activity)
-                
+
                     <p style="font-family: 'Times New Roman', serif; font-size: 16px;">
                         - {{ $activity->activity_name }}</p>
                 @endforeach
@@ -521,8 +521,8 @@
                 <p class="c2"><span class="c1"></span></p>
             </td>
             <td style="text-align: center" class="c10" colspan="1" rowspan="1"> {{$accomplishedPercentage}}%
-                 
-             
+
+
                 <p class="c2"><span class="c1"></span></p>
             </td>
             <td class="c6" colspan="1" rowspan="1">
@@ -539,7 +539,7 @@
     </p>
     <p class="c0"><span class="c1"></span></p>
     <p class="c0"><span class="c1"></span></p>
-    
+
     <p style="margin-left:-30px;"class="c5">
         <span
             class="c15">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
@@ -573,7 +573,7 @@
     <p class="c0"><span class="c1"></span></p>
     <p class="c0"><span class="c1"></span></p>
     <p class="c0"><span class="c1"></span></p>
-   
+
     <p class="c5">
         <span style="margin-left:120px; "
             class="c1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Approved
@@ -592,7 +592,7 @@
             class="c1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             COTE, Dean</span>
     </p>
-  
+
 </body>
 
 </html>

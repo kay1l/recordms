@@ -78,12 +78,6 @@
                 </div>
                 <div class="form-group-sm text-right">
 
-                    {{-- <a href="{{ route('files.downloadAll') }}" class="btn btn-info" role="button">
-                        <i class="fa fa-download"></i> Download All Files
-                    </a>
- --}}
-
-
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                         <i class=" fa fa-pencil"></i> Create Activity
                     </button>
@@ -425,7 +419,9 @@
                             </tr>
                         </thead>
                         <tbody class="table-content "  >
-                            @foreach ($activities as $activity)
+
+                            @forelse ($activities as $activity)
+
                                 <tr >
                                     <td><span
                                             class="badge badge-success m-r-5 m-b-5 code">{{ $activity->activity_code }}</span>
@@ -448,20 +444,18 @@
                                     </td>
                                     <td>
                                         @php
-                                            $collegeCode = $activity->collegeCode;
-                                            $college = App\Models\College::where('collegeCode', $collegeCode)->first();
-                                            $collegeName = $college ? $college->collegeName : 'Unknown College';
-                                            echo $collegeName;
-                                        @endphp
+                                        $college = App\Models\College::where('collegeCode', $activity->collegeCode)->first();
+                                    @endphp
+                                    {{ $college->collegeName ?? 'Unknown College' }}
+
                                     </td>
 
                                     <td>
                                         @php
-                                            $programId = $activity->proponentId;
-                                            $program = App\Models\Program::where('programId', $programId)->first();
-                                            $programName = $program ? $program->programName : 'Unknown Program';
-                                            echo $programName;
-                                        @endphp
+                                        $program = App\Models\Program::where('programId', $activity->proponentId)->first();
+                                    @endphp
+                                    {{ $program->programName ?? 'Unknown Program' }}
+
                                     </td>
                                     <td>
                                         @foreach (explode(',', $activity->proponents) as $prop)
@@ -495,7 +489,11 @@
                                     </td>
 
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="12" class="text-center text-muted">No activities to be displayed.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

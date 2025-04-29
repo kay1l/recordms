@@ -66,7 +66,7 @@
             border-bottom-width: 1pt;
             width: 113.4pt;
             border-top-color: #000000;
-            border-bottom-style: solid
+            border-bottom-style: solid;
         }
 
         .c5 {
@@ -216,7 +216,8 @@
         .c7 {
             background-color: #ffffff;
             max-width: 864pt;
-            padding: 72pt 72pt 72pt 72pt
+            padding: 72pt 72pt 72pt;
+            margin-top: -200px;
         }
 
         .c22 {
@@ -380,10 +381,10 @@
         <span
             style="display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 94.53px; height: 94.53px;">
             <img alt="" src="{{ public_path('logos/images/pitlogo.png') }}"
-                style="width: 94.53px; 
-            height: 94.53px; 
-            margin-right: 400px; 
-            margin-top: 90px; transform: 
+                style="width: 94.53px;
+            height: 94.53px;
+            margin-right: 400px;
+            margin-top: 90px; transform:
             rotate(0.00rad) translateZ(0px);
             -webkit-transform: rotate(0.00rad) translateZ(0px);"
                 title=""></span>
@@ -402,114 +403,85 @@
     <p class="c10 c12"><span class="c1"></span></p>
     <table style="margin-left:-110px;" class="c14">
         <tr class="c19">
-            <td class="c4">
-                <p class="c0"><span class="c1">College</span></p>
-            </td>
-            <td class="c8">
-                <p class="c0"><span class="c1">Target no. of Extension Projects</span></p>
-            </td>
-            <td class="c2">
-                <p class="c0"><span class="c1">Extension Activities Conducted</span></p>
-            </td>
-            <td class="c11">
-                <p class="c0"><span class="c1">Name of Extension Programs/Projects/Activities</span></p>
-            </td>
-            <td class="c5">
-                <p class="c0"><span class="c1">Department</span></p>
-            </td>
-            <td class="c13">
-                <p class="c0"><span class="c1">Quarter</span></p>
-            </td>
-            <td class="c5">
-                <p class="c0"><span class="c1">Proponent</span></p>
-            </td>
+            <td class="c4"><p class="c0"><span class="c1">College</span></p></td>
+            <td class="c8"><p class="c0"><span class="c1">Target no. of Extension Projects</span></p></td>
+            <td class="c2"><p class="c0"><span class="c1">Extension Activities Conducted</span></p></td>
+            <td class="c11"><p class="c0"><span class="c1">Name of Extension Programs/Projects/Activities</span></p></td>
+            <td class="c5"><p class="c0"><span class="c1">Department</span></p></td>
+            <td class="c13"><p class="c0"><span class="c1">Quarter</span></p></td>
+            <td class="c5"><p class="c0"><span class="c1">Proponent</span></p></td>
         </tr>
         @foreach ($colleges as $college)
-            <tr class="c22">
-                <td class="c4">
-                    <div class="">
-                    <p class="c0"><span class="c1">{{ $college->collegeName  }} </span></p>
-                </div>
-                </td>
-                <td class="c8">
-                    <p class="c0"><span class="c1">{{ $college->activity_count }}</span></p>
-                </td>
-                @php
-                    $conducted = $conductedCount->where('collegeCode',$college->collegeCode)->count()
-                @endphp
-                <td class="c2">
-                    <p class="c0"><span class="c1">{{ $conducted }}</span></p>
-                </td>
-                <td class="c11">
-                    @php
-                        $collegeActivities = $activity_names->where('collegeCode', $college->collegeCode);
-                    @endphp
-                    @if ($collegeActivities->isEmpty())
-                        <p class="c0"><span class="c1"></span></p>
-                    @else
-                        @foreach ($collegeActivities as $names)
-                            <p class="c0"><span class="c1">{{ $names->activity_name . ',' }}</span></p>
-                        @endforeach
-                    @endif
-                </td>
+            @php
+                $collegeActivities = $activities->where('collegeCode', $college->collegeCode)->values();
+                $rowCount = max(1, $collegeActivities->count());
+            @endphp
 
-                <td class="c5">
-                    @php
-                        $department_names = $activities->where('collegeCode', $college->collegeCode);
-                    @endphp
-                    @if ($department_names->isNotEmpty())
-                        @foreach ($department_names as $department)
+            @for ($i = 0; $i < $rowCount; $i++)
+                @php $activity = $collegeActivities[$i] ?? null; @endphp
+                <tr class="c22">
+                    @if ($i === 0)
+                        <td class="c4" style="text-align: center; vertical-align: middle;" rowspan="{{ $rowCount }}"><p class="c0"><span class="c1">{{ $college->collegeName }}</span></p></td>
+                        <td class="c8" style="text-align: center; vertical-align: middle;" rowspan="{{ $rowCount }}"><p class="c0"><span class="c1">{{ $college->activity_count }}</span></p></td>
+                        <td class="c2" style="text-align: center; vertical-align: middle;" rowspan="{{ $rowCount }}">
                             @php
-                                $program = App\Models\Program::find($department->proponentId);
-                                $programName = $program ? $program->programName : '  ';
+                                $conducted = $conductedCount->where('collegeCode', $college->collegeCode)->count();
                             @endphp
-                            @if ($programName == 'Information Technology Department')
-                            <p class="c16"><span class="c1">Information Tehnology</span></p>
-                            @endif
-                        @endforeach
-                    @else
-                        <p class="c16"><span class="c1"></span></p>
+                            <p class="c0"><span class="c1">{{ $conducted }}</span></p>
+                        </td>
                     @endif
-                </td>                
-                <td class="c13">
-                    @php
-                        $collegeQuarters = $activities->where('collegeCode', $college->collegeCode);
-                    @endphp
-                    @if ($collegeQuarters->isNotEmpty())
-                        @foreach ($collegeQuarters as $activity)
-                            <p class="c0"><span
-                                    class="c1">{{ $activity->quarter ?? 'No Quarter Assigned' }}</span></p>
-                        @endforeach
-                    @else
-                        <p class="c0"><span class="c1"></span></p>
-                    @endif
-                </td>
 
-                <td class="c5">
-                    @php
-                        $act_proponents = $activities->where('collegeCode', $college->collegeCode);
-                    @endphp
-                    @if ($act_proponents->isNotEmpty())
-                        @foreach ($act_proponents as $activity)
-                            <p class="c0"><span
-                                    class="c1">{{ $activity->proponent ?? 'No Proponent Assigned' }}</span></p>
-                        @endforeach
-                    @else
-                        <p class="c0"><span class="c1"></span></p>
-                    @endif
-                </td>
-            </tr>
+                    <td class="c11" style="text-align: center; vertical-align: middle;">
+                        <p class="c0"><span class="c1">{{ $activity->activity_name ?? '' }}</span></p>
+                    </td>
+
+                    <td class="c5" >
+                        @php
+                            $program = App\Models\Program::find($activity->proponentId ?? null);
+                            $programName = $program ? $program->programName : '';
+                        @endphp
+                        <p class="c16" style="text-align: center; vertical-align: middle;"><span class="c1">{{ $programName }}</span></p>
+                    </td>
+
+                    <td class="c13" style="text-align: center; vertical-align: middle;">
+                        <p class="c0">
+                            <span class="c1">
+                                @if ($activity)
+                                    @if ($activity->quarter == 1)
+                                        1st Quarter
+                                    @elseif ($activity->quarter == 2)
+                                        2nd Quarter
+                                    @elseif ($activity->quarter == 3)
+                                        3rd Quarter
+                                    @elseif ($activity->quarter == 4)
+                                        4th Quarter
+                                    @else
+                                        {{ $activity->quarter ?? '' }}
+                                    @endif
+                                @else
+
+                                @endif
+                            </span>
+                        </p>
+                    </td>
+
+
+
+                    <td class="c5" style="text-align: center; vertical-align: middle;">
+                        <p class="c0"><span class="c1">{{ $activity->proponent ?? '' }}</span></p>
+                    </td>
+                </tr>
+            @endfor
         @endforeach
     </table>
 
+
     <p class="c10 c12"><span class="c1"></span></p>
     <p class="c10 c12"><span class="c1"></span></p>
     <p class="c10 c12"><span class="c1"></span></p>
     <p class="c10 c12"><span class="c1"></span></p>
     <p class="c10 c12"><span class="c1"></span></p>
-    <p class="c10 c12"><span class="c1"></span></p>
-    <p class="c10 c12"><span class="c1"></span></p>
-    <p class="c10 c12"><span class="c1"></span></p>
+      <p class="c10 c12"><span class="c1"></span></p>
 
     <p class="c17"><span class="c1">Prepared by:</span></p>
     <p class="c17 c12"><span class="c1"></span></p>

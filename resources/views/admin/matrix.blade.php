@@ -137,7 +137,7 @@
                                                     data-file-type="moa" style="font-size: 1.5em;">
                                                     &times;
                                                 </a>
-                                                <a href="{{ route('file.download', ['filePath' => base64_encode($activity->moa_uploaded)]) }}"
+                                                <a href="{{ route('file.download.admin', ['filePath' => base64_encode($activity->moa_uploaded)]) }}"
                                                     target="_blank">
                                                     {{ basename($activity->moa_uploaded) }}
                                                 </a>
@@ -176,7 +176,7 @@
                                                         data-file-type="proposal" style="font-size: 1.5em;">
                                                         &times;
                                                     </a>
-                                                    <a href="{{ route('file.download', ['filePath' => base64_encode($activity->proposal_uploaded)]) }}"
+                                                    <a href="{{ route('file.download.admin', ['filePath' => base64_encode($activity->proposal_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->proposal_uploaded) }}
                                                     </a>
@@ -213,7 +213,7 @@
                                                         data-file-type="terminal" style="font-size: 1.5em;">
                                                         &times;
                                                     </a>
-                                                    <a href="{{ route('file.download', ['filePath' => base64_encode($activity->terminal_uploaded)]) }}"
+                                                    <a href="{{ route('file.download.admin', ['filePath' => base64_encode($activity->terminal_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->terminal_uploaded) }}
                                                     </a>
@@ -251,7 +251,7 @@
                                                         data-file-type="attendance" style="font-size: 1.5em;">
                                                         &times;
                                                     </a>
-                                                    <a href="{{ route('file.download', ['filePath' => base64_encode($activity->attendance_uploaded)]) }}"
+                                                    <a href="{{ route('file.download.admin', ['filePath' => base64_encode($activity->attendance_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->attendance_uploaded) }}
                                                     </a>
@@ -291,7 +291,7 @@
                                                         data-file-type="evaluation" style="font-size: 1.5em;">
                                                         &times;
                                                     </a>
-                                                    <a href="{{ route('file.download', ['filePath' => base64_encode($activity->evaluation_uploaded)]) }}"
+                                                    <a href="{{ route('file.download.admin', ['filePath' => base64_encode($activity->evaluation_uploaded)]) }}"
                                                         target="_blank">
                                                         {{ basename($activity->evaluation_uploaded) }}
                                                     </a>
