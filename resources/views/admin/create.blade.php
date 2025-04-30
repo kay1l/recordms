@@ -595,7 +595,7 @@
                     var collegeCode = $(this).val();
                     if (collegeCode) {
                         $.ajax({
-                            url: '/getProponents/' + collegeCode,
+                            url: '/getProponentsdirector/' + collegeCode,
                             type: 'GET',
                             dataType: 'json',
                             success: function(data) {

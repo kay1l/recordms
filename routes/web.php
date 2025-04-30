@@ -90,6 +90,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::post('/clear-file/admin', [MatrixAdminController::class, 'clearFile'])->name('file.clear.admin');
     Route::post('/uploadFileMatrix/admin/{activityCode}', [MatrixAdminController::class, 'uploadFileMatrixAdmin'])->name('uploadFileMatrixAdmin');
     Route::get('/get-activity-progress/{activityCode}', [MatrixAdminController::class, 'getActivityProgress'])->name('admin.activity.progress');
+    Route::get('/getProponents-admin/{collegeCode}', [ActivityController::class, 'getProponent'])->name('get.proponent');
     //end admin routes
 });
 
